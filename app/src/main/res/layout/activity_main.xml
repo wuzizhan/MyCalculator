@@ -14,6 +14,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:id="@+id/text_display"
             android:text="1234"
             android:textSize="32sp"
             android:layout_gravity="center"/>
@@ -30,13 +31,19 @@
             android:id="@+id/btn_1"
             android:text="1"
             android:textSize="30sp"
+            android:onClick="onButtonClick"
             android:background="@android:color/transparent"/>
+
+
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:id="@+id/text_1234"
             android:text="1234"
             android:textSize="32sp"
-            android:layout_gravity="center"/>
+            android:layout_gravity="center"
+            android:clickable="true"
+            android:onClick="onButtonClick"/>
 
     </LinearLayout>
 

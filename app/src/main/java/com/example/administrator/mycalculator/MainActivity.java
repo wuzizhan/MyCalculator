@@ -7,9 +7,16 @@ import android.os.Build;
 import android.view.View;
 import android.support.v7.app.ActionBar;
 import android.graphics.Color;
+import android.widget.Button;
+import android.widget.Toast;
+import android.widget.TextView;
 
 
 public class MainActivity extends AppCompatActivity {
+
+    private Button btn_1;
+    private TextView txt_1234;
+    private TextView text_dis;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -26,6 +33,17 @@ public class MainActivity extends AppCompatActivity {
         }
 //        ActionBar actionBar = getSupportActionBar();
 //        actionBar.hide();
+
+        //获取布局中的控件实例对象
+        btn_1 = (Button) findViewById(R.id.btn_1);
+        txt_1234 = (TextView) findViewById(R.id.text_1234);
+        text_dis = (TextView) findViewById(R.id.text_display);
+
+    }
+
+   // @Override
+    public void onButtonClick(View view) {
+        text_dis.setText(btn_1.getText());
 
     }
 
