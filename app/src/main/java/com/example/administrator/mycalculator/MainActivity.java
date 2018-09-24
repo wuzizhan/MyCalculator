@@ -4,19 +4,38 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.app.Activity;
 import android.os.Build;
+import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.support.v7.app.ActionBar;
 import android.graphics.Color;
 import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.Toast;
 import android.widget.TextView;
 
 
 public class MainActivity extends AppCompatActivity {
 
-    private Button btn_1;
-    private TextView txt_1234;
-    private TextView text_dis;
+    private Button btn0;           //数字按钮0
+    private Button btn1;           //数字按钮1
+    private Button btn2;           //数字按钮2
+    private Button btn3;           //数字按钮3
+    private Button btn4;
+    private Button btn5;
+    private Button btn6;
+    private Button btn7;
+    private Button btn8;
+    private Button btn9;
+    private Button btnDel;
+    private Button btnFloat;
+    private TextView tvDisplayNum1;  //显示用户按下的第一个值
+    private TextView tvDisplayNum2;  //显示用户按下的第二个值
+    private TextView tvDisPlayResult; //显示运算结果
+    private TextView tvDisplayCalculator; //显示运算符
+    private boolean flag = false;  //是否按下运算符
+
+    private static final String TAG = "MainActivity";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,20 +50,138 @@ public class MainActivity extends AppCompatActivity {
             decorView.setSystemUiVisibility(option);
             getWindow().setStatusBarColor(Color.TRANSPARENT);
         }
-//        ActionBar actionBar = getSupportActionBar();
-//        actionBar.hide();
 
-        //获取布局中的控件实例对象
-        btn_1 = (Button) findViewById(R.id.btn_1);
-        txt_1234 = (TextView) findViewById(R.id.text_1234);
-        text_dis = (TextView) findViewById(R.id.text_display);
+
+        //获取布局中的子控件数字按钮实例对象
+        btn0 = (Button) findViewById(R.id.btn_0);
+        btn1 = (Button) findViewById(R.id.btn_1);
+        btn2 = (Button) findViewById(R.id.btn_2);
+        btn3 = (Button) findViewById(R.id.btn_3);
+        btn4 = (Button) findViewById(R.id.btn_4);
+        btn5 = (Button) findViewById(R.id.btn_5);
+        btn6 = (Button) findViewById(R.id.btn_6);
+        btn7 = (Button) findViewById(R.id.btn_7);
+        btn8 = (Button) findViewById(R.id.btn_8);
+        btn9 = (Button) findViewById(R.id.btn_9);
+        btnDel = (Button)findViewById(R.id.btn_del);
+        btnFloat = (Button) findViewById(R.id.btn_dot);
+
+        //获取布局中显示子控件实例对象，并置空
+        tvDisplayNum1 = (TextView) findViewById(R.id.tv_display_num1);
+        tvDisplayNum1.setText("");
+        tvDisplayNum2 = (TextView) findViewById(R.id.tv_display_num2);
+        tvDisplayNum2.setText("");
+        tvDisPlayResult = (TextView) findViewById(R.id.tv_display_result);
+        tvDisPlayResult.setText("");
+        tvDisplayCalculator = (TextView) findViewById(R.id.tv_display_calculator);
+        tvDisplayCalculator.setText("");
+
+
+        //设置等号运算符按钮的监听事件
+        Button btnEqual = (Button)findViewById(R.id.btn_equal);
+        btnEqual.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String num1 = tvDisplayNum1.getText().toString();
+                String num2 = tvDisplayNum2.getText().toString();
+                if(!TextUtils.isEmpty(num1) && !TextUtils.isEmpty(num2)){
+                    float result = Calculator.plus(Float.parseFloat(num1), Float.parseFloat(num2));
+                    tvDisPlayResult.setText(String.valueOf(result));
+                }
+            }
+        });
+
+
+//        //获取子控件按钮的父布局的对象
+//        LinearLayout layoutDial = (LinearLayout)findViewById(R.id.layout_dial);
+//        layoutDial.measure(0,0);
+//        Toast.makeText(MainActivity.this, "数字按钮的宽度: "+layoutDial.getMeasuredWidth(), Toast.LENGTH_SHORT).show();
+//        Log.d(TAG, "数字按键的宽度: "+layoutDial.getMeasuredWidth());
+
 
     }
 
    // @Override
     public void onButtonClick(View view) {
-        text_dis.setText(btn_1.getText());
-
+        int id = view.getId();
+        switch(id) {
+            case R.id.btn_0:
+                if(flag == false) {
+                    tvDisplayNum1.append(btn0.getText());
+                }else {
+                    tvDisplayNum2.append(btn0.getText());
+                }
+                break;
+            case R.id.btn_1:
+                if(flag == false) {
+                    tvDisplayNum1.append(btn1.getText());
+                }else {
+                    tvDisplayNum2.append(btn1.getText());
+                }
+                break;
+            case R.id.btn_2:
+                if(flag == false) {
+                    tvDisplayNum1.append(btn2.getText());
+                }else {
+                    tvDisplayNum2.append(btn2.getText());
+                }
+                break;
+            case R.id.btn_3:
+                if(flag == false) {
+                    tvDisplayNum1.append(btn3.getText());
+                }else {
+                    tvDisplayNum2.append(btn3.getText());
+                }
+                break;
+            case R.id.btn_4:
+                if(flag == false) {
+                    tvDisplayNum1.append(btn4.getText());
+                }else {
+                    tvDisplayNum2.append(btn4.getText());
+                }
+                break;
+            case R.id.btn_5:
+                if(flag == false) {
+                    tvDisplayNum1.append(btn5.getText());
+                }else {
+                    tvDisplayNum2.append(btn5.getText());
+                }
+                break;
+            case R.id.btn_6:
+                if(flag == false) {
+                    tvDisplayNum1.append(btn6.getText());
+                }else {
+                    tvDisplayNum2.append(btn6.getText());
+                }
+                break;
+            case R.id.btn_7:
+                if(flag == false) {
+                    tvDisplayNum1.append(btn7.getText());
+                }else {
+                    tvDisplayNum2.append(btn7.getText());
+                }
+                break;
+            case R.id.btn_8:
+                if(flag == false) {
+                    tvDisplayNum1.append(btn8.getText());
+                }else {
+                    tvDisplayNum2.append(btn8.getText());
+                }
+                break;
+            case R.id.btn_9:
+                if(flag == false) {
+                    tvDisplayNum1.append(btn9.getText());
+                }else {
+                    tvDisplayNum2.append(btn9.getText());
+                }
+                break;
+            case R.id.btn_plus:
+                flag = true;
+                tvDisplayCalculator.setText("+");
+                break;
+            default:
+                return;
+        }
     }
 
 //
