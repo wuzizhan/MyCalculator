@@ -84,10 +84,38 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View view) {
                 String num1 = tvDisplayNum1.getText().toString();
                 String num2 = tvDisplayNum2.getText().toString();
-                if(!TextUtils.isEmpty(num1) && !TextUtils.isEmpty(num2)){
-                    float result = Calculator.plus(Float.parseFloat(num1), Float.parseFloat(num2));
-                    tvDisPlayResult.setText(String.valueOf(result));
+                String operator = tvDisplayCalculator.getText().toString();
+                switch (operator) {
+                    case "+":
+                        if(!TextUtils.isEmpty(num1) && !TextUtils.isEmpty(num2)){
+                            float result = Calculator.plus(Float.parseFloat(num1), Float.parseFloat(num2));
+                            tvDisPlayResult.setText(String.valueOf(result));
+                        }
+                        break;
+                    case "-":
+                        if(!TextUtils.isEmpty(num1) && !TextUtils.isEmpty(num2)){
+                            float result = Calculator.minus(Float.parseFloat(num1), Float.parseFloat(num2));
+                            tvDisPlayResult.setText(String.valueOf(result));
+                        }
+                        break;
+                    case "*":
+                        if(!TextUtils.isEmpty(num1) && !TextUtils.isEmpty(num2)){
+                            float result = Calculator.multiplication(Float.parseFloat(num1), Float.parseFloat(num2));
+                            tvDisPlayResult.setText(String.valueOf(result));
+                        }
+                        break;
+                    case "/":
+                        if(!TextUtils.isEmpty(num1) && !TextUtils.isEmpty(num2)){
+                            float result = Calculator.division(Float.parseFloat(num1), Float.parseFloat(num2));
+                            tvDisPlayResult.setText(String.valueOf(result));
+                        }
+                        break;
+                    default:
+                        return;
+
+
                 }
+
             }
         });
 
@@ -175,10 +203,84 @@ public class MainActivity extends AppCompatActivity {
                     tvDisplayNum2.append(btn9.getText());
                 }
                 break;
+            case R.id.btn_dot:
+                if(flag == false) {
+                    if(!"".equals(tvDisplayNum1.getText().toString())){
+                        tvDisplayNum1.append(btnFloat.getText());
+                    }else{
+                        Toast.makeText(MainActivity.this, "请先输入数值", Toast.LENGTH_SHORT).show();
+                    }
+                }else{
+                    if(!"".equals(tvDisplayNum2.getText().toString())){
+                        tvDisplayNum2.append(btnFloat.getText());
+                    }else{
+                        Toast.makeText(MainActivity.this, "请先输入数值", Toast.LENGTH_SHORT).show();
+                    }
+                }
+//                if(flag == false) {
+//                    if(!"".equals(tvDisplayNum1)){
+//                        tvDisplayNum1.append(btnFloat.getText());
+//                    }else{
+//                        Toast.makeText(MainActivity.this, "请先输入数值", Toast.LENGTH_SHORT).show();
+//                    }
+//                }else{
+//                    if(!"".equals(tvDisplayNum2)){
+//                        tvDisplayNum2.append(btnFloat.getText());
+//                    }else{
+//                        Toast.makeText(MainActivity.this, "请先输入数值", Toast.LENGTH_SHORT).show();
+//                    }
+//                }
+                break;
             case R.id.btn_plus:
                 flag = true;
                 tvDisplayCalculator.setText("+");
                 break;
+            case R.id.btn_minus:
+                flag = true;
+                tvDisplayCalculator.setText("-");
+                break;
+            case R.id.btn_div:
+                flag = true;
+                tvDisplayCalculator.setText("/");
+                break;
+            case R.id.btn_multi:
+                flag = true;
+                tvDisplayCalculator.setText("*");
+                break;
+            case R.id.btn_del:
+                String result = tvDisPlayResult.getText().toString();
+                String num2 = tvDisplayNum2.getText().toString();
+                String num1 = tvDisplayNum1.getText().toString();
+                String operator = tvDisplayCalculator.getText().toString();
+
+                if(!TextUtils.isEmpty(result)){
+                    String resultSub = result.substring(0,result.length()-1);
+                    tvDisPlayResult.setText(resultSub);
+                    break;
+                }
+                if(!num2.equals("")){
+                    String num2Sub = num2.substring(0, num2.length()-1);
+                    Toast.makeText(MainActivity.this, num2Sub, Toast.LENGTH_SHORT).show();
+                    tvDisplayNum2.setText(num2Sub);
+                    break;
+                }
+                if(operator != "") {
+                    //tvDisplayCalculator.setText("");
+                    String operatorSub = operator.substring(0, operator.length()-1);
+                    Toast.makeText(MainActivity.this, "删除后剩余长度："+operatorSub.length(), Toast.LENGTH_SHORT).show();
+                    //if( operatorSub == "")
+                    if(TextUtils.isEmpty(operatorSub))
+                        tvDisplayCalculator.setText("");
+                    break;
+                }
+                if(!"".equals(num1)){
+                    String num1Sub = num1.substring(0, num1.length()-1);
+                    tvDisplayNum1.setText(num1Sub);
+                    Toast.makeText(MainActivity.this, "删除后剩余长度："+num1Sub.length(), Toast.LENGTH_SHORT).show();
+                    break;
+                }
+                break;
+
             default:
                 return;
         }

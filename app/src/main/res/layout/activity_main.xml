@@ -293,6 +293,7 @@
                 android:textSize="40sp"
                 android:textColor="#000"
                 android:layout_gravity="center"
+                android:onClick="onButtonClick"
                 android:background="@android:color/transparent"/>
             <Button
                 android:layout_width="wrap_content"
@@ -303,6 +304,7 @@
                 android:textSize="40sp"
                 android:textColor="#000"
                 android:layout_gravity="center"
+                android:onClick="onButtonClick"
                 android:background="@android:color/transparent"/>
             <Button
                 android:layout_width="wrap_content"
@@ -313,6 +315,7 @@
                 android:textSize="40sp"
                 android:textColor="#000"
                 android:layout_gravity="center"
+                android:onClick="onButtonClick"
                 android:background="@android:color/transparent"/>
             <Button
                 android:layout_width="wrap_content"
