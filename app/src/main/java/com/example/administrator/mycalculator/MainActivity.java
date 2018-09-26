@@ -11,6 +11,7 @@ import android.support.v7.app.ActionBar;
 import android.graphics.Color;
 import android.widget.Button;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.Toast;
 import android.widget.TextView;
 
@@ -27,13 +28,15 @@ public class MainActivity extends AppCompatActivity {
     private Button btn7;
     private Button btn8;
     private Button btn9;
-    private Button btnDel;
     private Button btnFloat;
     private TextView tvDisplayNum1;  //显示用户按下的第一个值
     private TextView tvDisplayNum2;  //显示用户按下的第二个值
     private TextView tvDisPlayResult; //显示运算结果
     private TextView tvDisplayCalculator; //显示运算符
     private boolean flag = false;  //是否按下运算符
+
+    private LinearLayout linearLayout;          //父容器的实例对象
+    private RelativeLayout relativeLayout;
 
     private static final String TAG = "MainActivity";
 
@@ -63,7 +66,6 @@ public class MainActivity extends AppCompatActivity {
         btn7 = (Button) findViewById(R.id.btn_7);
         btn8 = (Button) findViewById(R.id.btn_8);
         btn9 = (Button) findViewById(R.id.btn_9);
-        btnDel = (Button)findViewById(R.id.btn_del);
         btnFloat = (Button) findViewById(R.id.btn_dot);
 
         //获取布局中显示子控件实例对象，并置空
@@ -76,8 +78,15 @@ public class MainActivity extends AppCompatActivity {
         tvDisplayCalculator = (TextView) findViewById(R.id.tv_display_calculator);
         tvDisplayCalculator.setText("");
 
+        //获取父容器的实例对象
+        linearLayout = (LinearLayout)findViewById(R.id.layout_display);
+        relativeLayout = (RelativeLayout)findViewById(R.id.relativeLayout);
+        Log.d(TAG, linearLayout.toString());
+        Log.d(TAG, relativeLayout.toString());
 
-        //设置等号运算符按钮的监听事件
+
+
+        //设置等号按钮的监听事件
         Button btnEqual = (Button)findViewById(R.id.btn_equal);
         btnEqual.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -107,9 +116,13 @@ public class MainActivity extends AppCompatActivity {
                     case "/":
                         if(!TextUtils.isEmpty(num1) && !TextUtils.isEmpty(num2)){
                             float result = Calculator.division(Float.parseFloat(num1), Float.parseFloat(num2));
-                            tvDisPlayResult.setText(String.valueOf(result));
+                            if(-1 == result){
+                                tvDisPlayResult.setText("分母不能为0，请重新输入");
+                            }else
+                                tvDisPlayResult.setText(String.valueOf(result));
                         }
                         break;
+
                     default:
                         return;
 
@@ -258,27 +271,40 @@ public class MainActivity extends AppCompatActivity {
                     tvDisPlayResult.setText(resultSub);
                     break;
                 }
+                //relativeLayout.removeViewAt(1);
+                //relativeLayout.getChildAt(1).setVisibility(View.GONE);
+
                 if(!num2.equals("")){
                     String num2Sub = num2.substring(0, num2.length()-1);
                     Toast.makeText(MainActivity.this, num2Sub, Toast.LENGTH_SHORT).show();
                     tvDisplayNum2.setText(num2Sub);
                     break;
                 }
+                //relativeLayout.removeViewAt(0);
+                //relativeLayout.getChildAt(0).setVisibility(View.GONE);
+
                 if(operator != "") {
-                    //tvDisplayCalculator.setText("");
-                    String operatorSub = operator.substring(0, operator.length()-1);
-                    Toast.makeText(MainActivity.this, "删除后剩余长度："+operatorSub.length(), Toast.LENGTH_SHORT).show();
-                    //if( operatorSub == "")
-                    if(TextUtils.isEmpty(operatorSub))
-                        tvDisplayCalculator.setText("");
+                    tvDisplayCalculator.setText("");
+//                    String operatorSub = operator.substring(0, operator.length()-1);
+//                    Toast.makeText(MainActivity.this, "删除后剩余长度："+operatorSub.length(), Toast.LENGTH_SHORT).show();
+//                    //if( operatorSub == "")
+//                    if(TextUtils.isEmpty(operatorSub))
+//                        tvDisplayCalculator.setText("");
+                    flag = false;
                     break;
                 }
+                //linearLayout.removeViewAt(1);
+                //linearLayout.getChildAt(1).setVisibility(View.GONE);
+
                 if(!"".equals(num1)){
                     String num1Sub = num1.substring(0, num1.length()-1);
                     tvDisplayNum1.setText(num1Sub);
                     Toast.makeText(MainActivity.this, "删除后剩余长度："+num1Sub.length(), Toast.LENGTH_SHORT).show();
                     break;
                 }
+                //linearLayout.removeViewAt(0);
+                //linearLayout.getChildAt(0).setVisibility(View.GONE);
+
                 break;
 
             default:
